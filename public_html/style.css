@@ -1,0 +1,336 @@
+
+body{
+    background-color: #606060;
+}
+.title{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0px;
+    font-family: 'Shree Devanagari 714';
+    color: #FF9D00;
+    font-size: 60px;
+    position: absolute;
+    text-align: center;
+}
+
+.caption{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #ffffff;
+    font-size: 30px;
+    top: 100px;
+}
+
+.login{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #ffffff;
+    font-size: 30px;
+    top: 100px;
+}
+
+.loginInputs{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #ffffff;
+    font-size: 20px;
+    top: 175px;
+}
+
+#loginError{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #FF6347;
+    font-size: 15px;
+    top: 300px;
+}
+
+.create{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #ffffff;
+    font-size: 30px;
+    top: 100px;
+}
+
+.createInputs{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #ffffff;
+    font-size: 20px;
+    top: 175px;
+}
+
+#createError{
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    color: #FF6347;
+    font-size: 15px;
+    top: 300px;
+}
+
+.wrapperBox{
+    width: 100%;
+    top: 215px;
+    overflow: hidden;
+    position: absolute;
+}
+#largeBoxLeft{
+    background-color: #8D8D8D;
+    border-color: #FF9D00;
+    border-style: solid;
+    border-width: 4px;
+    width: 45%;
+    height: 525px;
+    margin: 20px; 
+    padding: 10px;
+    float: left;
+    overflow: scroll;
+    text-overflow: ellipsis;
+}
+
+.largeBoxRight{
+    background-color: #8D8D8D;
+    border-color: #FF9D00;
+    border-style: solid;
+    border-width: 4px;
+    width: 45%;
+    height: 525px;
+    margin: 20px; 
+    padding: 10px;
+    overflow: hidden;
+}
+
+.wrapperCaption{
+    width: 100%;
+    top: 120px;
+    overflow: hidden;
+    position: absolute;
+}
+
+.searchCaption{
+    color: white;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    font-size: 30px;
+    width: 45%;
+    height: 100px;
+    margin: 20px; 
+    padding: 10px;
+    float: left;
+    overflow: hidden;
+}
+
+.playlistCaption{
+    color: white;
+    text-align: center;
+    font-family: 'Shree Devanagari 714';
+    font-size: 30px;
+    width: 45%;
+    height: 100px;
+    margin: 20px; 
+    padding: 10px;
+    overflow: hidden;
+}
+
+.cover{
+    padding: 4px;
+    display: inline-block;
+
+}
+
+.compContainer{
+
+}
+
+.songTitle{
+    color: white;
+    font-size: 0.7vw;
+    font-family: 'Shree Devanagari 714';
+    text-overflow: clip;
+}
+
+.albumnTitle{
+    color: black;
+    font-size: 0.6vw;
+    font-family: 'Shree Devanagari 714';
+}
+
+.artistName{
+    font-size: 0.6vw;
+    color: white;
+}
+
+.info{
+    position: relative;
+    display: inline-block;
+    padding-left:30px;
+    font-family: 'Shree Devanagari 714';
+    bottom: 30px;
+}
+
+.searchBox{
+    height: 25px;
+  padding: 6px;
+  display: block;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+  border: 1px solid #ccc;
+}
+
+#AddButton0{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton1{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton2{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton3{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton4{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton5{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton6{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton7{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton8{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#AddButton9{
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 100px;
+    margin-right:10px;
+}
+
+#loginSpotify{
+    background-color: #1DB954;
+    position: absolute;
+    left: 36%;
+    top: 190px;
+    z-index: 3;
+}
+
+#saveSpotify{
+    background-color: #ffffff;
+    position: absolute;
+    left: 45%;
+    top: 190px;
+    z-index: 3;
+}
+
+#createPlaylist{
+    background-color: #ffffff;
+    position: absolute;
+    left: 54%;
+    top: 190px;
+    z-index: 3;
+}
+
+#playlistDropdown{
+    z-index: 3;
+    position: absolute;
+    left:80%;
+    top: 75px;
+}

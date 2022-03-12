@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Song Masheen</title>
+	<link rel="stylesheet" href="style.css">
+	<script>
+		let cookie_str = document.cookie.split("; ");
+		if (cookie_str[0] != "logged_in=True"){
+			window.location.replace("login.html");
+		}
+		var username = cookie_str[1].split("=")[1];
+	</script>
+</head>
+<body>
+	<div class="title">
+		<p>Song Masheen</p>
+	</div>
+	<div class="caption">
+		<p>Explore. Curate. Listen.</p>
+	</div>
+	<button id="createPlaylist">Save Playlist</button>
+	<div class="wrapperCaption">
+		
+		<div class="searchCaption">
+			<p>Search</p>
+		</div>
+		<div class="playlistCaption">
+			<p>Playlist</p>
+		</div>
+		<select name="cars" id="playlistDropdown">
+			
+		  </select>
+	</div>
+	<script>
+		/*MUST PUSH EACH RESPECTIVE VALUE TO THESE ARRAYS*/
+		var artists = []
+		var songTitles = []
+		var albumns = []
+		var covers = []
+
+		/*MUST UPDATE I WHEN GOING TO NEXT SONG*/
+		var i = 0
+	</script>
+	
+	<div class="wrapperBox">
+		<div id="largeBoxLeft">
+			<div class="searchBox">
+				<input id="searchInput" type="text" placeholder="Artist, Title, Album...">
+				<button id="searchButton" type="submit"><i>Search</i></button>
+			</div>
+			
+		</div>
+		<div class="largeBoxRight">
+			<ul id="rightPlaylist">
+			
+			</ul>
+		</div>
+	</div>
+
+	<script src="local_save.js"></script>
+	<script type="text/javascript">
+		
+		var artists = []
+		var songTitles = []
+		var albumns = []
+		var covers = []
+		var i = 0
+		var songcontain = document.getElementById("largeBoxLeft")
+		var playList = []
+		var playlistURIs = []
+		var playlistHREFS = []
+		var currentResults
+
+
+		/*DROP DOWN STUFF*/
+		getPlaylists();
+
+
+		let searchInput = document.getElementById("searchInput");
+		let searchButton = document.getElementById("searchButton");
+		searchButton.addEventListener("click", function () {
+			fetch(`/search_tracks?title=${searchInput.value}`).then(function(response){
+				response.json().then(function(data){
+					console.log(data)
+					updateResults(data)
+					
+					//"data" is an array of 10 "song objects" related to either a track, album, or artist that was input in the search bar
+					//each element in the array has an album field, artist(s), 
+				});
+			}).catch(function (error) {
+   				console.log(error);
+			});
+		});
+
+		let playlist_dropdown = document.getElementById("playlistDropdown");
+		playlist_dropdown.addEventListener("input", function() {
+			let playlistName = playlist_dropdown.value;
+		});
+
+		/*CREATE PLAYLIST FOR DATABASE HERE*/
+		let createPlaylistButton = document.getElementById("createPlaylist");
+		createPlaylistButton.addEventListener("click", function () {
+			createPlaylist("myPlaylist")
+		});
+
+		function updateResults(searchData){
+			/*MUST PUSH EACH RESPECTIVE VALUE TO THESE ARRAYS*/
+			artists = []
+			songTitles = []
+			albumns = []
+			covers = []
+			/*MUST UPDATE I WHEN GOING TO NEXT SONG*/
+			
+			currentResults = searchData
+			
+			for (let k = 0; k < 10; k++){
+				artists.push(searchData[k].artists[0].name)
+				songTitles.push(searchData[k].name)
+				albumns.push(searchData[k].album.name)
+				covers.push(searchData[k].album.images[0].url)
+			}
+			
+			for (let j = 0; j < 10; j++){
+				loadReact()
+				if(i == 10){
+					i=0
+				}
+				else{
+					i++;
+				}
+			}
+		}
+
+		function addToPlaylist(index){
+			for(let j = 0; j < playlistURIs.length; j++){
+				if(currentResults[index].uri == playlistURIs[j]){
+					console.log("repeat!")
+					return
+				} 
+			}
+			
+			playList.push(currentResults[index])
+			playlistURIs.push(currentResults[index].uri)
+			playlistHREFS.push(currentResults[index].href)
+
+			document.getElementById('rightPlaylist').innerHTML += ('<li>'+currentResults[index].name+" by "+currentResults[index].artists[0].name+'</li>');
+			
+			let isGood = false;
+			fetch(`/create_playlist?id=${currentResults[index].artists[0].id}`).then(function(response){
+				response.json().then(function(data){
+					for(let m = 1; m < 7; m++){
+						for(let j = 0; j < playlistURIs.length; j++){
+							if(data[m].uri == playlistURIs[j]){
+								isGood = false;
+								break;
+							}
+							else{
+								isGood = true
+							}
+						}
+
+						if(isGood == true){
+							document.getElementById('rightPlaylist').innerHTML += ('<li>'+data[m].name+" by "+data[m].artists[0].name+'</li>');
+							addSong('myPlaylist', data[m].uri, data[m].href);
+						}
+						isGood = false;
+					}
+					
+				});
+			}).catch(function (error) {
+   				console.log(error);
+			});
+			
+
+		
+
+			addSong('myPlaylist', currentResults[index].uri, currentResults[index].href);
+
+			
+		}
+
+		function loadReact(){
+			'use strict';
+
+			const e = React.createElement;
+
+			class SongComponent extends React.Component {
+			constructor(props) {
+				super(props);
+			}
+
+			render() {
+
+				return React.createElement("div", {
+				className: "compContatiner"
+				}, /*#__PURE__*/React.createElement("div", {
+				className: "cover"
+				}, /*#__PURE__*/React.createElement("img", {
+				src: window.covers[i],
+				alt: "Cover",
+				height: "80%",
+				width: "200px"
+				})), /*#__PURE__*/React.createElement("div", {
+				className: "info"
+				}, /*#__PURE__*/React.createElement("div", {
+				className: "songTitle"
+				}, /*#__PURE__*/React.createElement("h1", null, window.songTitles[i])), /*#__PURE__*/React.createElement("div", {
+				className: "albumnTitle"
+				}, /*#__PURE__*/React.createElement("h3", null, window.albumns[i])), /*#__PURE__*/React.createElement("div", {
+				className: "artistName"
+				}, /*#__PURE__*/React.createElement("h2", null, window.artists[i]))), React.createElement("button", {
+					id: "AddButton" + i,
+					type: "button"
+				}, "Add"));
+				}
+			}
+			
+			var result = document.createElement('div')
+			result.setAttribute("id", "song_container" + i)
+			songcontain.appendChild(result)
+
+			const domContainer = document.querySelector('#song_container' + i);
+			ReactDOM.render(e(SongComponent), domContainer);
+
+			let addButton = document.getElementById("AddButton" + i);
+			addButton.setAttribute('l',i);
+			addButton.addEventListener("click", function () {
+				var selectedIndex = i
+				let l = addButton.getAttribute('l');
+				addToPlaylist(l)
+			});
+		}
+	</script>
+
+<!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- Load our React component. -->
+  
+</body>
+</html>

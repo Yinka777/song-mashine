@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Log in</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="title">
+		<p>Song Masheen</p>
+	</div>
+
+	<div class="login">
+		<p>Log in</p>
+	</div>
+
+	<div class="loginInputs">
+		<div>
+			<label name="username" for="username">Username:</label>
+			<input type="text" id="username">
+		</div>
+		<div>
+			<label name="password" for="password">Password:</label>
+			<input type="password" id="password">
+		</div>
+	
+
+		<button id="login">Log in</button>
+
+		<p><a href="create.html">Need an account? Create one here!</a></p>
+	</div>
+
+	<div id="loginError">
+
+	</div>
+
+	<script>
+	let usernameInput = document.getElementById("username");
+	let passwordInput = document.getElementById("password");
+	document.getElementById("login").addEventListener("click", function () {
+		fetch("/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				username: usernameInput.value,
+				textPassword: passwordInput.value,
+			})
+		}).then(function (response) {
+			if (response.status === 200) {
+				console.log("Success");
+
+				// change '30' to however many minutes until server removes "logged_in" cookie
+				let now = new Date();
+				now.setMinutes(now.getMinutes() + 30);
+				let expireTime = now.toUTCString();
+
+				document.cookie = `logged_in=True; expires= ${expireTime}; path=/ `
+				document.cookie = `user=${usernameInput.value}; expires= ${expireTime}; path=/ `
+				window.location.replace("index.html");
+			}else if (response.status === 400){
+				// user does not exist
+				console.log("User does not exist.");
+				addError(400);
+			}else if (response.status === 401){
+				// password did not match
+				console.log("Password did not match.");
+				addError(401);
+			}else {
+				console.log("Failure");
+			}
+		});
+	});
+
+	function addError(code){
+		if (code === 400){
+			//400, user does not exist
+			let errorText = document.createElement("span");
+			let errorDiv = document.getElementById("loginError");
+			if (errorDiv.children.length > 0){
+				errorDiv.textContent = '';
+			}
+			errorText.textContent = "User does not exist";
+			errorDiv.append(errorText);
+		}else{
+			//401, password did not match
+			let errorText = document.createElement("span");
+			let errorDiv = document.getElementById("loginError");
+			if (errorDiv.children.length > 0){
+				errorDiv.textContent = '';
+			}
+			errorText.textContent = "Password did not match";
+			errorDiv.append(errorText);
+		}
+	}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Create</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div class="title">
+		<p>Song Masheen</p>
+	</div>
+
+	<div class="create">
+		<p>Create New Account</p>
+	</div>
+
+	<div class="createInputs">
+		<div>
+			<label name="username" for="username">Username:</label>
+			<input type="text" id="username">
+		</div>
+		<div>
+			<label name="password" for="password">Password:</label>
+			<input type="password" id="password">
+		</div>
+
+		<button id="create">Create account</button>
+
+		<p><a href="login.html">Already have an account? Log in here!</a></p>
+	</div>
+
+	<div id="createError">
+		
+	</div>
+
+	<script>
+	let usernameInput = document.getElementById("username");
+	let passwordInput = document.getElementById("password");
+	document.getElementById("create").addEventListener("click", function () {
+		fetch("/create", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				username: usernameInput.value,
+				textPassword: passwordInput.value,
+			})
+		}).then(function (response) {
+			if (response.status === 200) {
+				console.log("Success");
+				addSuccess();
+			}else if (response.status === 401){
+				// password/user did not meet length requirements
+				console.log("Username or password did not meet length requirements");
+				addError(401);
+			}else if (response.status === 406){
+				// user already exists in database
+				console.log("User already exists in database.");
+				addError(406);
+			}else{
+				console.log("Failure");
+			}
+		})
+	});
+
+	function addError(code){
+		if (code === 401){
+			//401, length requirement failure
+			let errorText = document.createElement("span");
+			let errorDiv = document.getElementById("createError");
+			if (errorDiv.children.length > 0){
+				errorDiv.textContent = '';
+			}
+
+			errorText.textContent = "Your username must be between 1 and 20 characters, and your password must be between 5 and 36 characters";
+			errorDiv.append(errorText);
+		}else{
+			//406, user already exists
+			let errorText = document.createElement("span");
+			let errorDiv = document.getElementById("createError");
+			if (errorDiv.children.length > 0){
+				errorDiv.textContent = '';
+			}
+			errorText.textContent = "Username is already taken.";
+			errorDiv.append(errorText);
+		}
+	}
+
+	function addSuccess(){
+		let errorText = document.createElement("span");
+			let errorDiv = document.getElementById("createError");
+			if (errorDiv.children.length > 0){
+				errorDiv.textContent = '';
+			}
+
+			errorText.textContent = "Account created! Please select the link above to log in.";
+			errorDiv.append(errorText);
+	}
+	</script>
+
+</body>
+</html>
