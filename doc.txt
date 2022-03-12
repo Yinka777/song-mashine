@@ -1,0 +1,32 @@
+Song Masheen
+
+Features:
+    Search for a song
+    Choose the correct song from returned choices
+    Generate a 7 song playlist from chosen song
+    Option to save to your Spotify library
+
+Main Steps:
+    Collect inputted string in the song field
+    Return a collection of at most 10 songs with the given title
+    Create a new empty playlist
+    Add the chosen song to the playlist
+    Get the related artists of the artist(s) of the chosen song
+    Pick 6 random artists from related artists collection
+    Get the top tracks of each of the 6 artists
+    Add the tracks to the playlist
+    Return the completed playlist
+
+Login Steps:
+    Create a database to store users and hashed passwords
+    Collect user inputs for login details
+    Verify password if existing user
+    Return user home page, where saved playlist would be
+
+Saving or Deleting Playlists:
+    Create a field in the users table to store playlist
+    Add the playlist object to the field
+    If deleting, remove the playlist from the table
+
+
+
